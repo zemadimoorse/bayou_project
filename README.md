@@ -36,15 +36,7 @@ The following is an example of the kind of data the application extracts after p
 [
   {
     "account_id": "220035713407",
-    "amount_due": 0.0,
-    "due_date": "2025-08-21",
-    "past_due_amount": 0.0,
-    "last_payment_date": null,
-    "last_payment_amount": null
-  },
-  {
-    "account_id": "220035713407",
-    "amount_due": 0.0,
+    "amount_due": 50.0,
     "due_date": "2025-08-21",
     "past_due_amount": 0.0,
     "last_payment_date": null,
