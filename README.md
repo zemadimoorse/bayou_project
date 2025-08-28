@@ -30,24 +30,6 @@ To adapt the application for a new utility, you must update the core logic in `p
 
 The following is an example of the kind of data the application extracts after parsing a utility's website.
 
-### **Extracted Fields**
-
-  * [cite\_start]**outstanding\_balance**: $0.00 [cite: 1]
-  * [cite\_start]**due\_date**: 08/21/2025 [cite: 1]
-  * [cite\_start]**current\_bill\_date**: 08/01/2025 [cite: 1]
-  * [cite\_start]**previous\_bill\_date**: 07/01/2025 [cite: 1]
-  * [cite\_start]**previous\_bill\_total\_charges**: $176.43 [cite: 2]
-  * [cite\_start]**previous\_bill\_payment\_received**: -$176.43 [cite: 2]
-  * [cite\_start]**current\_period\_electricity\_charges**: $200.09 [cite: 2]
-  * [cite\_start]**current\_period\_natural\_gas\_charges**: $39.01 [cite: 2]
-  * [cite\_start]**current\_period\_total\_charges**: $239.10 [cite: 2]
-  * [cite\_start]**current\_bill\_payment\_received**: -$239.10 [cite: 3]
-  * [cite\_start]**total\_payments\_received**: -$239.10 [cite: 3]
-  * [cite\_start]**electricity\_meter\_number**: X154394834 [cite: 3]
-  * [cite\_start]**electricity\_usage\_kwh**: 1114 [cite: 3]
-  * [cite\_start]**natural\_gas\_meter\_number**: 1265869 [cite: 3]
-  * [cite\_start]**natural\_gas\_usage\_therms**: 9.9511 [cite: 4]
-
 ### **Processed JSON Output**
 
 ```json
