@@ -16,7 +16,7 @@ To run the application, follow these steps:
 2.  If you're targeting a different utility, you'll need to modify lines 17-24 in the `project.py` file to accommodate the new site.
 3.  Replace USERNAME and PASSWORD in `project.py` with the PSE utility credentials. Replace API key with Zhila's gemini API key.
 3.  Execute `project.py` locally. Note that the application relies on the Gemini API key, which is linked to a specific Google Cloud project. This may require additional configuration.
-4.  Once running, be patient—requests to the Gemini API can be time-consuming. The results will be displayed in the console upon completion.
+4.  Once running, results can take some time. This is because of the Gemini API. It should take about a minute to process.
 
 -----
 
