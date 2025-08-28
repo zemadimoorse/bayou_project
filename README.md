@@ -1,8 +1,8 @@
-# Utility Billing Parser
+# Utility Data Parser
 
 ## 💡 Description and Technical Details
 
-This application is designed to automate the process of extracting billing data from utility company websites.  The system uses **Selenium** and **WebDriver** to navigate and interact with web pages, logging in with provided credentials. 
+This application is designed to automate the process of extracting data from utility company websites.  The system uses **Selenium** and **WebDriver** to navigate and interact with web pages, logging in with provided credentials. 
 
 After logging in, it classifies links into categories like **account**, **billing**, and **usage**. It then sequentially loads each classified URL to parse HTML content and JSON network call responses, ultimately extracting user data. The current implementation is **synchronous**, but future plans include introducing **asynchronous** processing and **batching** of users for improved efficiency. Error handling and retry mechanisms are planned for a later design phase.
 
