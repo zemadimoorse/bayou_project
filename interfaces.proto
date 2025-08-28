@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package userinput;
+
+message UserCredentials {
+    string username = 1;
+    string password = 2;
+    string root_url = 3;
+    string login_button_id = 4;
+    string username_input_id = 5;
+    string password_input_id = 6;
+}
