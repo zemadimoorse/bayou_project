@@ -72,27 +72,31 @@ def parse_data(user: UserCredentials):
         # In prod, we would want to use caching to avoid repeated calls.
         print("Opening links and parsing content...")
 
-        # NOTE: I keep hitting Vertex API limits here so I'm just evaluating one billing URL.
-        for link in parsed_links[1]["billing"]:
-            if (link["link_url"].endswith(BILLING_URL_SUFFIX_FOR_TESTING)):
-                # TODO: Replace hard-coded domain with relative link builder from webdriver current url.
-                driver.get("https://www.pse.com" + link["link_url"])
-                wait = WebDriverWait(driver, 20)
-                crawl_for_billing(driver, "billing")
+        for link_classification in parsed_links:
+            # Gemini is returning a nested array for each billing type. 
+            # In production we would want to provide a structured Gemini JSON response format, this is a little weird.
+            for link in list(link_classification.values())[0]:
+                # NOTE: I keep hitting Vertex API limits here so I'm just evaluating one billing URL.
+                if (link["link_url"].endswith(BILLING_URL_SUFFIX_FOR_TESTING)):
+                    # TODO: Replace hard-coded domain with relative link builder from webdriver current url.
+                    driver.get("https://www.pse.com" + link["link_url"])
+                    wait = WebDriverWait(driver, 20)
+                    parsed_billing = crawl_for_billing(driver, "billing")
+                    print(parsed_billing)
 
-                # Crawl json for billing data.
-                print("Crawling and evaluating json...")
-                filtered_json_responses = filter_driver_requests(driver)
-                parsed_json = crawl_json_for_billing(filtered_json_responses)
-                print(parsed_json)
+                    # Crawl json for billing data.
+                    print("Crawling and evaluating json...")
+                    filtered_json_responses = filter_driver_requests(driver)
+                    parsed_json = crawl_json_for_billing(filtered_json_responses)
+                    print(parsed_json)
 
 
     except Exception as e:
         print(f"\nAn error occurred: {e}")
         # In headless mode, saving a screenshot on error is crucial for debugging.
-        # screenshot_path = "error_screenshot.png"
-        # driver.save_screenshot(screenshot_path)
-        # print(f"Screenshot saved to {screenshot_path}")
+        screenshot_path = "error_screenshot.png"
+        driver.save_screenshot(screenshot_path)
+        print(f"Screenshot saved to {screenshot_path}")
 
     finally:
         # 6. Always close the browser session to free up resources.

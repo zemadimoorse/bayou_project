@@ -16,25 +16,29 @@ def filter_driver_requests(driver):
 
     for request in driver.requests:
         try:
-            if request.response:  # Ensure a response exists for the request
+            if request.response:
                 # Check if the 'Content-Type' header exists and contains 'application/json'
                 # NOTE: In prod, we would want to look up multiple content-types, not just application/json.
                 if 'Content-Type' in request.response.headers and \
                 'application/json' in request.response.headers['Content-Type']:
                         json_requests.append(json.loads(request.response.body))
         except Exception as e:
-            # print(f"Error processing json request: {e}")
-            #TODO: Add error handling
+            # Continue instead of raising an error because some responses may be malformed or compressed.
+            print(Exception(f"Could not parse webdriver requests: {e}"))
+            print(request)
             pass
 
     return json_requests
 
 def crawl_json_for_billing(responses):
-  model = genai.GenerativeModel('gemini-2.5-flash')
+  model = genai.GenerativeModel('gemini-2.5-flash-lite')
   generation_config = genai.GenerationConfig(response_mime_type="application/json")
   # TODO: add streaming here.
   # TODO: use defined response JSON format (standard list of fields).
   response = model.generate_content(
       json_billing_prompt + json.dumps(responses), generation_config=generation_config
-  )
-  return json.loads(response.text)
+  ) 
+  try:
+    return json.loads(response.text)
+  except json.JSONDecodeError as e:
+    raise Exception(f"Could not parse json requests for billing: {e}")

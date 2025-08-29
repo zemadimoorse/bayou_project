@@ -13,34 +13,39 @@ genai.configure(api_key=API_KEY)
 visited_links = set()
 
 def crawl_for_links(driver): 
-    model = genai.GenerativeModel('gemini-2.5-flash')
+    model = genai.GenerativeModel('gemini-2.5-flash-lite')
     # TODO: add schema from separate file.
     generation_config = genai.GenerationConfig(response_mime_type="application/json")
     # TODO: add streaming/async handling here.
     response = model.generate_content(
         classify_links_prompt + driver.page_source, generation_config=generation_config
     )
-    # TODO: Wrap this in a try/catch and add logging.
-    return json.loads(response.text)
+    try:
+      return json.loads(response.text)
+    except json.JSONDecodeError as e:
+      raise Exception(f"Could not crawl links: {e}")
+
 
 def crawl_for_billing(driver, link_type):
   # Same here, hitting API limits so this is only evaluating billing views.
   if link_type == "billing":
     prompt = extract_billing_prompt
   
-  # TODO: Add error here.
   if not prompt: 
-    return
+    raise Exception(f"Could find prompt for {link_type}: {e}")
 
   if (driver.current_url in visited_links):
     return
   
   visited_links.add(driver.current_url)
 
-  model = genai.GenerativeModel('gemini-2.5-flash')
+  model = genai.GenerativeModel('gemini-2.5-flash-lite')
   generation_config = genai.GenerationConfig(response_mime_type="application/json")
   # TODO: add streaming here.
   response = model.generate_content(
     extract_billing_prompt + driver.page_source, generation_config=generation_config
   )
-  print(response.text)
+  try:
+    return json.loads(response.text)
+  except json.JSONDecodeError as e:
+    raise Exception(f"Could not crawl billing pages: {e}")
